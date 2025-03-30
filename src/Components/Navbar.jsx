@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom'
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext)
-    const [userType, setUserType] = useState('')
+
+const {userType,setUserType}=useContext(AuthContext)
 
     const handleUserType = (type) => {
         setUserType(type)
@@ -15,10 +16,10 @@ const Navbar = () => {
     const Navlink_user_seller = (
         <>
             <li>
-                <div>My Bids</div>
+                <Link to={'/my_bid'}>My Bids</Link>
             </li>
             <li>
-                <div>Bid Requests</div>
+                <Link to={'/bid_request'}>Bid Requests</Link>
             </li>
         </>
     )
@@ -26,10 +27,10 @@ const Navbar = () => {
     const Navlink_user_buyer = (
         <>
             <li>
-                <div>Add Job</div>
+                <Link to={'/add_job'}>Add Job</Link>
             </li>
             <li>
-                <div>My Posted Jobs</div>
+                <Link to={'/my_posted_job'}>My Posted Jobs</Link>
             </li>
         </>
     )
@@ -122,4 +123,5 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default Navbar  ;
+

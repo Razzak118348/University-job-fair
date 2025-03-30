@@ -21,6 +21,7 @@ const googleProvider = new GoogleAuthProvider()
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
+const [userType, setUserType] = useState('')
 
     const createUser = (email, password) => {
         setLoading(true)
@@ -36,6 +37,17 @@ const AuthProvider = ({ children }) => {
         setLoading(true)
         return signInWithPopup(auth, googleProvider)
     }
+
+    // usetrType seller or buyer
+    useEffect(() => {
+        if(user?.email){
+            setUserType(user.email.includes('@buyer.com') ? 'buyer' : 'seller')
+        }
+        else{
+            setUserType('')
+        }
+    }, [user])
+
 
     const logOut = async () => {
         setLoading(true)
@@ -75,7 +87,10 @@ return sendEmailVerification(auth.currentUser)
         signInWithGoogle,
         logOut,
         updateUserProfile,
-        EmailVerification
+        EmailVerification,
+        userType,
+        setUserType,
+
     }
 
     return (
