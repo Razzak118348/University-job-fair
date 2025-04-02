@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../Providers/AuthProvider';
 
 const Slide = ({image,text}) => {
-
+// set userType in AuthProvider.js for using in this component or any other component
     const {userType}=useContext(AuthContext)
     return (
         <div
