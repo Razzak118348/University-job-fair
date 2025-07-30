@@ -10,7 +10,7 @@ const Footer = () => {
                 <div className='flex flex-col items-center text-center'>
                     <div className='flex gap-2 items-center'>
                         <img className='w-auto h-7' src={logo} alt='' />
-                        <span>SoloSphere</span>
+                        <span>HSTU Job Portal</span>
                     </div>
 
                     <div className='flex flex-wrap justify-center mt-6 -mx-4'>

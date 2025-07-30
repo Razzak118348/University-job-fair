@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react';
 import {
     GoogleAuthProvider,
     createUserWithEmailAndPassword,
@@ -10,72 +10,73 @@ import {
     signInWithPopup,
     signOut,
     updateProfile,
-} from 'firebase/auth'
-import app from '../firebase/firebase.config'
+} from 'firebase/auth';
+import app from '../firebase/firebase.config';
 
-
-export const AuthContext = createContext(null)
-const auth = getAuth(app)
-const googleProvider = new GoogleAuthProvider()
+export const AuthContext = createContext(null);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null)
-    const [loading, setLoading] = useState(true)
-const [userType, setUserType] = useState('')
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [userType, setUserType] = useState(localStorage.getItem('userType') || '');
+
+    const updateUserType = (type) => {
+        setUserType(type);
+        localStorage.setItem('userType', type);
+    };
+
+    const clearUserType = () => {
+        setUserType('');
+        localStorage.removeItem('userType');
+    };
 
     const createUser = (email, password) => {
-        setLoading(true)
-        return createUserWithEmailAndPassword(auth, email, password)
-    }
+        setLoading(true);
+        return createUserWithEmailAndPassword(auth, email, password);
+    };
 
     const signIn = (email, password) => {
-        setLoading(true)
-        return signInWithEmailAndPassword(auth, email, password)
-    }
+        setLoading(true);
+        return signInWithEmailAndPassword(auth, email, password);
+    };
 
     const signInWithGoogle = () => {
-        setLoading(true)
-        return signInWithPopup(auth, googleProvider)
-    }
-
-    // usetrType seller or buyer
-    useEffect(() => {
-        if(user?.email){
-            setUserType(user.email.includes('@buyer.com') ? 'buyer' : 'seller')
-        }
-        else{
-            setUserType('')
-        }
-    }, [user])
-
+        setLoading(true);
+        return signInWithPopup(auth, googleProvider);
+    };
 
     const logOut = async () => {
-        setLoading(true)
-        return signOut(auth)
-    }
+        setLoading(true);
+        clearUserType();
+        return signOut(auth);
+    };
 
     const updateUserProfile = (name, photo) => {
         return updateProfile(auth.currentUser, {
             displayName: name,
             photoURL: photo,
-        })
-    }
+        });
+    };
 
-const EmailVerification =()=>{
-return sendEmailVerification(auth.currentUser)
-}
+    const EmailVerification = () => {
+        return sendEmailVerification(auth.currentUser);
+    };
 
-    // onAuthStateChange
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, currentUser => {
-            setUser(currentUser)
-            console.log('CurrentUser-->', currentUser)
-            setLoading(false)
-        })
-        return () => {
-            return unsubscribe()
-        }
-    }, [])
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+            setLoading(false);
+
+            if (currentUser && !userType) {
+                // If logged in and no userType stored, set default
+                updateUserType('buyer');
+            }
+        });
+
+        return () => unsubscribe();
+    }, []);
 
     const authInfo = {
         user,
@@ -89,13 +90,14 @@ return sendEmailVerification(auth.currentUser)
         updateUserProfile,
         EmailVerification,
         userType,
-        setUserType,
-
-    }
+        setUserType: updateUserType,
+    };
 
     return (
-        <AuthContext.Provider value={{...authInfo}}>{children}</AuthContext.Provider>
-    )
-}
+        <AuthContext.Provider value={authInfo}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
 
-export default AuthProvider
+export default AuthProvider;

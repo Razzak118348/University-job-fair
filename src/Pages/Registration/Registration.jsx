@@ -134,7 +134,7 @@ const Registration = () => {
                             className='block mb-2 text-sm font-medium text-gray-600 '
                             htmlFor='name'
                         >
-                            Username
+Name
                         </label>
                         <input
                             id='name'

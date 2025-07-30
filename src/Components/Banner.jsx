@@ -15,16 +15,16 @@ import bgimg2 from '../assets/images/carousel2.jpg';
 import bgimg3 from '../assets/images/carousel3.jpg';
 
 const allSlides = [
-    { image: bgimg1, text: "Welcome to SoloSphere!" },
+    { image: bgimg1, text: "Welcome to HSTU Job Portal!" },
     { image: bgimg2, text: "Find Your Perfect Match!" },
     { image: bgimg3, text: "Hire the Best Experts!" }
 ];
 
 const Banner = () => {
     return (
-        <div className='container px-6 mx-auto'>
+        <div className='container px-6 mx-auto '>
             <Swiper
-                className='mt-0 text-center border-2'
+                className='mt-0 text-center border-2 '
                 slidesPerView={1}
                 spaceBetween={30}
                 loop={true}
