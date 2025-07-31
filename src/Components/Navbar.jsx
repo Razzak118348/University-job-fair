@@ -1,5 +1,3 @@
-
-
 import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -25,22 +23,44 @@ const Navbar = () => {
         setUserType(newType);
     };
 
+    const linkClass = ({ isActive }) =>
+        isActive
+            ? "text-blue-600 font-semibold border-b-2 border-blue-600 pb-1"
+            : "text-gray-700 hover:text-blue-600";
+
     const navItems = (
         <>
-            <li><NavLink to="/" onClick={() => setIsOpen(false)}>Home</NavLink></li>
-            <li><NavLink to="/services" onClick={() => setIsOpen(false)}>Services</NavLink></li>
+            <li>
+                <NavLink to="/" onClick={() => setIsOpen(false)} className={linkClass}>
+                    Home
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to="/allJob" onClick={() => setIsOpen(false)} className={linkClass}>
+                    All Jobs
+                </NavLink>
+            </li>
 
             {userType === "seller" && (
-                <>
-                    <li><NavLink to="/my_bid" onClick={() => setIsOpen(false)}>My Bids</NavLink></li>
-                    <li><NavLink to="/bid_request" onClick={() => setIsOpen(false)}>Bid Requests</NavLink></li>
-                </>
+                <li>
+                    <NavLink to="/my_bid" onClick={() => setIsOpen(false)} className={linkClass}>
+                        My Bids
+                    </NavLink>
+                </li>
             )}
 
             {userType === "buyer" && (
                 <>
-                    <li><NavLink to="/add_job" onClick={() => setIsOpen(false)}>Add Job</NavLink></li>
-                    <li><NavLink to="/my_posted_job" onClick={() => setIsOpen(false)}>My Posted Jobs</NavLink></li>
+                    <li>
+                        <NavLink to="/add_job" onClick={() => setIsOpen(false)} className={linkClass}>
+                            Add Job
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/my_posted_job" onClick={() => setIsOpen(false)} className={linkClass}>
+                            My Posted Jobs
+                        </NavLink>
+                    </li>
                 </>
             )}
         </>
@@ -49,9 +69,9 @@ const Navbar = () => {
     return (
         <nav className="bg-white shadow-md fixed top-0 w-full z-50">
             <div className="max-w-7xl mx-auto px-4 py-2 flex justify-between items-center">
-                <Link to="/" className="text-xl font-bold text-blue-600">HSTU Job Portal</Link>
+                <Link to="/" className="text-base md:text-lg lg:text-xl font-bold text-blue-600">HSTU Job Portal</Link>
 
-                {/* Large Screen Menu */}
+                {/* Desktop menu */}
                 <div className="hidden md:flex items-center space-x-6">
                     <ul className="flex items-center space-x-4">{navItems}</ul>
 
@@ -59,12 +79,12 @@ const Navbar = () => {
                         <div className="flex items-center gap-4 relative">
                             <button
                                 onClick={toggleUserType}
-                                className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
+                                className="px-3 py-1 text-sm  text-white rounded bg-blue-500 hover:bg-blue-600"
                             >
                                 Switch to {userType === "buyer" ? "Seller" : "Buyer"}
                             </button>
 
-                            {/* Dropdown on image */}
+                            {/* Dropdown */}
                             <div className="dropdown dropdown-end">
                                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                                     <div
@@ -90,19 +110,17 @@ const Navbar = () => {
                                         >
                                             My Profile
                                         </Link>
-
                                     </li>
                                     <li>
                                         <button
                                             onClick={handleLogout}
-                                            className="block w-full  px-4 py-2 text-sm text-red-600 text-left hover:bg-gray-100"
+                                            className="block w-full px-4 py-2 text-sm text-red-600 text-left hover:bg-gray-100"
                                         >
                                             Logout
                                         </button>
                                     </li>
                                 </ul>
                             </div>
-
                         </div>
                     ) : (
                         <div className="space-x-2">
@@ -116,7 +134,7 @@ const Navbar = () => {
                     )}
                 </div>
 
-                {/* Mobile Toggle Button */}
+                {/* Mobile toggle */}
                 <div className="md:hidden">
                     <button onClick={toggleMenu} className="text-2xl text-gray-700">
                         {isOpen ? <FaTimes /> : <FaBars />}
@@ -124,7 +142,7 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Mobile Menu */}
+            {/* Mobile menu */}
             {isOpen && (
                 <div className="md:hidden bg-white border-t shadow-sm px-4 py-3">
                     <ul className="space-y-3">{navItems}</ul>
@@ -133,7 +151,7 @@ const Navbar = () => {
                         <div className="mt-4 space-y-3">
                             <button
                                 onClick={toggleUserType}
-                                className="block w-full text-left px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-600"
+                                className="block w-full text-left hover:py-2 hover:text-white  text-gray-800 rounded hover:bg-blue-600"
                             >
                                 Switch to {userType === "buyer" ? "Seller" : "Buyer"}
                             </button>
@@ -141,23 +159,22 @@ const Navbar = () => {
                                 <img
                                     src={user.photoURL || "/default-avatar.png"}
                                     alt="User"
-                                    className="hidden md:block h-12 w-12 rounded-full border border-gray-300 object-cover"
+                                    className="h-12 w-12 rounded-full border border-gray-300 object-cover"
                                 />
                             </div>
                             <Link
                                 to="/profile"
                                 onClick={() => setIsOpen(false)}
-                                className="block w-full text-left px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+                                className="block w-full text-left px-4 py-2 text-gray-800 rounded hover:bg-gray-300"
                             >
                                 My Profile
                             </Link>
                             <button
                                 onClick={handleLogout}
-                                className="block w-full  px-4 py-2 text-sm text-red-600 text-left hover:bg-gray-100"
+                                className="block w-full px-4 py-2 text-sm text-red-600 text-left hover:bg-gray-100"
                             >
                                 Logout
                             </button>
-
                         </div>
                     ) : (
                         <div className="mt-4 space-y-2">
@@ -176,28 +193,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-{/* <div className="flex items-center gap-3 mt-2">
-                                <img
-    src={user.photoURL || "https://cdn-icons-png.flaticon.com/512/219/219986.png"}
-    alt="User"
-    className="hidden md:block h-12 w-12 rounded-full border border-gray-300 object-cover"
-/>
-
-                            </div>
-                            <Link
-                                to="/profile"
-                                onClick={() => setIsOpen(false)}
-                                className="block w-full text-left px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
-                            >
-                            My Profile
-                            </Link>
-                            <button
-                                onClick={handleLogout}
-                                className="block w-full  px-4 py-2 text-sm text-red-600 text-left hover:bg-gray-100"
-                            >
-                                Logout
-                            </button>
-
-                        </div> */}
