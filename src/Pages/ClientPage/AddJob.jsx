@@ -6,7 +6,7 @@ import UseAuth from '../../Hook/UseAuth';
 
 const AddJob = () => {
     const {user}=UseAuth()
-    console.log(user.photoURL)
+
     const {
         register,
         handleSubmit,
@@ -176,14 +176,14 @@ const AddJob = () => {
                     />
                 </div>
 
-                <div>
+                {/* <div>
                     <label className="block font-semibold">Apply Link or Email</label>
                     <input
                         {...register('applyLink')}
                         className="w-full border p-2 rounded"
                         placeholder="e.g. https://applyhere.com/job-id or careers@example.com"
                     />
-                </div>
+                </div> */}
 
                 <button
                     type="submit"

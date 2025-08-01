@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Link } from "react-router-dom";
 import Root from "../LayOuts/Root";
 import Login from "../Pages/Login/Login";
 import Home from "../Pages/Home/Home";
@@ -10,12 +10,14 @@ import MyPostedJob from "../Pages/ClientPage/MyPostedJob";
 import Profile from "../Pages/ProfilePage/Profile";
 import PrivateRoute from "./PrivateRoute";
 import AllJob from "../Pages/AllJob/AllJob";
+import ApplyJob from "../Pages/ApplyJob/ApplyJob";
 
 const router=createBrowserRouter(
     [
         {
             path: "/",
             element:<Root></Root>,
+            errorElement:<div className="text-center text-2xl font-bold">404 Not Found <Link to={'/'}><button className="p-3 bg-blue-500 text-white">Go To Home</button></Link></div>,
             children:[
                 {
                     path:'/',
@@ -51,8 +53,21 @@ const router=createBrowserRouter(
                 },
                 {
                     path:'/allJob',
-                    element: <AllJob></AllJob>
+                    element:<PrivateRoute children={ <AllJob></AllJob>}></PrivateRoute>,
+                    loader: async () => {
+                        const res = await fetch('http://localhost:3000/jobs');
+                        if (!res.ok) {
+                            throw new Error('Failed to fetch jobs');
+                        }
+                        return res.json();
+                    }
+                },
+                {
+                    path: '/applyJob/:id',
+                    element:<PrivateRoute children={<ApplyJob></ApplyJob>}></PrivateRoute>,
+                    loader:({params}) => fetch(`http://localhost:3000/jobs/${params.id}`)
                 }
+
             ]
         }
     ]

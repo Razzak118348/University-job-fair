@@ -60,6 +60,7 @@ const AuthProvider = ({ children }) => {
         });
     };
 
+
     const EmailVerification = () => {
         return sendEmailVerification(auth.currentUser);
     };

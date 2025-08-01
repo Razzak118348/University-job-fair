@@ -9,10 +9,10 @@ import withReactContent from "sweetalert2-react-content";
 const MySwal = withReactContent(Swal);
 
 const Profile = () => {
-  const { user: authUser } = UseAuth();
+  const { user: authUser} = UseAuth();
   const userEmail = authUser?.email;
 
-  const [user, setUser] = useState(null); // DB data or fallback authUser
+  const [user, setUser] = useState(null); // DB user data
   const [modalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState({});
   const [isNewUser, setIsNewUser] = useState(false); // POST vs PATCH
@@ -53,7 +53,7 @@ const Profile = () => {
       .catch((err) => {
         console.error("Error fetching profile:", err);
       });
-  }, [userEmail, authUser]);
+  }, [userEmail, authUser,setUser]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -116,6 +116,7 @@ const Profile = () => {
       });
     }
   };
+    console.log('user form profile', user);
 
   return (
     <div className="p-4 max-w-3xl mx-auto">
@@ -152,7 +153,12 @@ const Profile = () => {
                 </ul>
               </>
             )}
-
+ {user.experienceDetails && (
+              <>
+                <h3 className="text-xl font-semibold">Experience</h3>
+                <p className="text-gray-700 whitespace-pre-line">{user.experienceDetails}</p>
+              </>
+            )}
             {user.education && (
               <>
                 <h3 className="text-xl font-semibold">Education</h3>
@@ -280,6 +286,15 @@ const Profile = () => {
                 onChange={handleChange}
                 className="w-full p-2 border rounded"
               />
+              <textarea
+                name="experienceDetails"
+                placeholder="Your Experience Details"
+                value={formData.experienceDetails || ""}
+                onChange={handleChange}
+                className="w-full p-2 border rounded"
+                rows="4"
+              />
+
               <input
                 name="projects"
                 placeholder="Project Links (comma separated)"
