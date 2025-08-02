@@ -11,13 +11,15 @@ import Profile from "../Pages/ProfilePage/Profile";
 import PrivateRoute from "./PrivateRoute";
 import AllJob from "../Pages/AllJob/AllJob";
 import ApplyJob from "../Pages/ApplyJob/ApplyJob";
+import Error from "../Pages/Error/Error";
+import JobDetails from "../Components/JobDetails";
 
 const router=createBrowserRouter(
     [
         {
             path: "/",
             element:<Root></Root>,
-            errorElement:<div className="text-center text-2xl font-bold">404 Not Found <Link to={'/'}><button className="p-3 bg-blue-500 text-white">Go To Home</button></Link></div>,
+            errorElement:<Error></Error>,
             children:[
                 {
                     path:'/',
@@ -66,6 +68,10 @@ const router=createBrowserRouter(
                     path: '/applyJob/:id',
                     element:<PrivateRoute children={<ApplyJob></ApplyJob>}></PrivateRoute>,
                     loader:({params}) => fetch(`http://localhost:3000/jobs/${params.id}`)
+                },
+                {
+                    path:"/jobs/:id",
+                    element:<JobDetails></JobDetails>
                 }
 
             ]

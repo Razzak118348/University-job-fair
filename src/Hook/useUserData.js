@@ -25,7 +25,7 @@ const useUserData = () => {
         });
     }
   }, [userEmail]);
-console.log("User data fetched:", user);
+// console.log("User data fetched:", user);
   return  user;
 };
 

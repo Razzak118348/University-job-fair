@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import SingleJob from '../../Components/SingleJob';
 import useUserData from '../../Hook/useUserData';
 import Loading from '../../Components/Loading';
+import axios from 'axios';
 
 const AllJob = () => {
   const [allJobs, setAllJobs] = useState([]);
@@ -59,9 +60,19 @@ const AllJob = () => {
     setShowModal(true);
   };
 
-  const onSubmit = async (data) => {
-    console.log('Application Submitted:', { ...data, jobId: selectedJob._id });
-// Here you would typically send the application data to your server
+const onSubmit = async (data) => {
+  try {
+    const payload = {
+      ...data,
+      jobId: selectedJob._id,
+      userId: user._id,
+    };
+console.log('Submitting application:', payload);
+    // Send application data to the server
+    await axios.post(
+      `http://localhost:3000/jobApplications/${user.email}` ,
+      payload
+    );
 
     Swal.fire({
       title: 'Success!',
@@ -72,7 +83,15 @@ const AllJob = () => {
 
     reset();
     setShowModal(false);
-  };
+  } catch (error) {
+    console.error('Error submitting application:', error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Failed to submit application. Please try again later.',
+    });
+  }
+};
 
   return (
     <div className="p-4 md:p-8 max-w-full mx-auto bg-gradient-to-br from-blue-50 to-white min-h-screen">
@@ -81,7 +100,9 @@ const AllJob = () => {
       </h2>
 
       {loading ? (
-        <Loading />
+        <div className="flex items-center justify-center min-h-screen w-full">
+          <Loading />
+        </div>
       ) : (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -190,7 +211,11 @@ const AllJob = () => {
 
               <div>
                 <label className="block font-semibold">Age</label>
-                <input type="number" {...register('age')} className="w-full border p-2 rounded" />
+                <input
+                  type="number"
+                  {...register('age')}
+                  className="w-full border p-2 rounded"
+                />
               </div>
 
               <div>

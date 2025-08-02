@@ -61,6 +61,9 @@ const AddJob = () => {
                     {errors.photoUrl && <p className="text-red-500 text-sm">Photo URL is required</p>}
                 </div>
                 <div>
+                    <input  {...register('email', { required: true })} hidden value={user.email} />
+                </div>
+                <div>
                     <label className="block font-semibold">Job Title</label>
                     <input
                         {...register('title', { required: true })}
