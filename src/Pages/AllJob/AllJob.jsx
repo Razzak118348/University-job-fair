@@ -20,7 +20,7 @@ const AllJob = () => {
   const fetchJobs = async (page) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:3000/jobs?page=${page}&limit=9`);
+      const response = await fetch(`https://job-portal-server-ruby-two.vercel.app/jobs?page=${page}&limit=9`);
       const data = await response.json();
       setAllJobs(data.jobs);
       setTotalPages(data.totalPages);
@@ -70,7 +70,7 @@ const onSubmit = async (data) => {
 console.log('Submitting application:', payload);
     // Send application data to the server
     await axios.post(
-      `http://localhost:3000/jobApplications/${user.email}` ,
+      `https://job-portal-server-ruby-two.vercel.app/jobApplications/${user.email}` ,
       payload
     );
 

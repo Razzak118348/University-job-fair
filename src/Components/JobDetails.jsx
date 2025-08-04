@@ -8,7 +8,7 @@ const JobDetails = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/allJobs/${id}`)
+        axios.get(`https://job-portal-server-ruby-two.vercel.app/allJobs/${id}`)
             .then(res => {
                 setJob(res.data);
                 setLoading(false);

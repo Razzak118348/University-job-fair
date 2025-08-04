@@ -10,7 +10,7 @@ const Mybid = () => {
 
     useEffect(() => {
         if (user?.email) {
-            axios.get(`http://localhost:3000/jobApplications/${user.email}`)
+            axios.get(`https://job-portal-server-ruby-two.vercel.app/jobApplications/${user.email}`)
                 .then(res => {
                     setMyBids(res.data);
                     setLoading(false);

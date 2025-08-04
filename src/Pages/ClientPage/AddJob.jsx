@@ -17,7 +17,7 @@ const AddJob = () => {
     const onSubmit = async (data) => {
         try {
             console.log("Submitting job data:", data);
-            const response = await axios.post('http://localhost:3000/jobs', data);
+            const response = await axios.post('https://job-portal-server-ruby-two.vercel.app/jobs', data);
             if (response.data?.insertedId || response.status === 200) {
                 Swal.fire({
                     icon: 'success',
@@ -53,7 +53,7 @@ const AddJob = () => {
                 <div>
                     <label className="block font-semibold">Photo URL</label>
                     <input
-                        {...register('photoUrl', { required: true })}
+                        {...register('photoUrl')}
                         className="w-full border p-2 rounded"
                         defaultValue={user?.photoURL || ''}
 

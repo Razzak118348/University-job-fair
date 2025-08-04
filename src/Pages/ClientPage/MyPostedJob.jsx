@@ -14,7 +14,7 @@ const MyPostedJob = () => {
         const fetchPostedJobs = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:3000/jobs/${email}`);
+                const response = await axios.get(`https://job-portal-server-ruby-two.vercel.app/jobs/${email}`);
                 setMyPostedJob(response.data);
             } catch (error) {
                 console.error('Error fetching posted jobs:', error);
@@ -30,7 +30,7 @@ const MyPostedJob = () => {
 
     const handleDeleteJob = async (jobId) => {
         try {
-            await axios.delete(`http://localhost:3000/jobs/${jobId}`);
+            await axios.delete(`https://job-portal-server-ruby-two.vercel.app/jobs/${jobId}`);
             setMyPostedJob(prev => prev.filter(job => job._id !== jobId));
         } catch (error) {
             console.error('Error deleting job:', error);
@@ -41,7 +41,7 @@ const MyPostedJob = () => {
 
     const fetchApplicants = async (jobId) => {
         try {
-            const response = await axios.get(`http://localhost:3000/jobApplications/job/${jobId}`);
+            const response = await axios.get(`https://job-portal-server-ruby-two.vercel.app/jobApplications/job/${jobId}`);
             setApplicantsMap(prev => ({ ...prev, [jobId]: response.data }));
         } catch (error) {
             console.error(`Error fetching applicants for job ${jobId}:`, error);
@@ -98,7 +98,7 @@ const MyPostedJob = () => {
                                                 <p className="text-sm text-gray-500">{applicant.email}</p>
                                             </div>
                                             <Link
-                                                to={`/profile?email=${applicant.email}`}
+                                                to={`/applicantProfile?email=${applicant.email}`}
                                                 className="text-blue-500 underline text-sm"
                                             >
                                                 View Profile

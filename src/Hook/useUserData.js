@@ -12,7 +12,7 @@ const useUserData = () => {
   useEffect(() => {
     if (userEmail) {
       axios
-        .get(`http://localhost:3000/profile?email=${userEmail}`)
+        .get(`https://job-portal-server-ruby-two.vercel.app/profile?email=${userEmail}`)
         .then((res) => {
           if (res.data) {
             setUser(res.data);

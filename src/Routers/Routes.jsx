@@ -13,6 +13,7 @@ import AllJob from "../Pages/AllJob/AllJob";
 import ApplyJob from "../Pages/ApplyJob/ApplyJob";
 import Error from "../Pages/Error/Error";
 import JobDetails from "../Components/JobDetails";
+import ApplicantProfile from "../Pages/ApplicantProfile/ApplicantProfile";
 
 const router=createBrowserRouter(
     [
@@ -54,10 +55,14 @@ const router=createBrowserRouter(
                     element:<PrivateRoute><Profile></Profile></PrivateRoute>
                 },
                 {
+                    path:'/applicantProfile',
+                    element:<PrivateRoute><ApplicantProfile></ApplicantProfile></PrivateRoute>
+                },
+                {
                     path:'/allJob',
                     element:<PrivateRoute children={ <AllJob></AllJob>}></PrivateRoute>,
                     loader: async () => {
-                        const res = await fetch('http://localhost:3000/jobs');
+                        const res = await fetch('https://job-portal-server-ruby-two.vercel.app/jobs');
                         if (!res.ok) {
                             throw new Error('Failed to fetch jobs');
                         }
@@ -67,7 +72,7 @@ const router=createBrowserRouter(
                 {
                     path: '/applyJob/:id',
                     element:<PrivateRoute children={<ApplyJob></ApplyJob>}></PrivateRoute>,
-                    loader:({params}) => fetch(`http://localhost:3000/jobs/${params.id}`)
+                    loader:({params}) => fetch(`https://job-portal-server-ruby-two.vercel.app/jobs/${params.id}`)
                 },
                 {
                     path:"/jobs/:id",
