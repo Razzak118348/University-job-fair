@@ -19,7 +19,7 @@ const Navbar = () => {
     };
 
     const toggleUserType = () => {
-        const newType = userType === "buyer" ? "seller" : "buyer";
+        const newType = userType === "Recruiter" ? "Freelancer" : "Recruiter";
         setUserType(newType);
     };
 
@@ -40,8 +40,21 @@ const Navbar = () => {
                     All Jobs
                 </NavLink>
             </li>
+            {(user?.email === "porag2024@gmail.com" || user?.email === "sabbirahamed3132@gmail.com") && (
+                <li>
+                    <NavLink
+                        to="/admin"
+                        className={({ isActive }) =>
+                            `font-semibold transition ${isActive ? "text-blue-600 underline underline-offset-4" : "hover:text-blue-500"
+                            }`
+                        }
+                    >
+                        Admin
+                    </NavLink>
+                </li>
+            )}
 
-            {userType === "seller" && (
+            {userType === "Freelancer" && (
                 <li>
                     <NavLink to="/my_bid" onClick={() => setIsOpen(false)} className={linkClass}>
                         My Bids
@@ -49,7 +62,7 @@ const Navbar = () => {
                 </li>
             )}
 
-            {userType === "buyer" && (
+            {userType === "Recruiter" && (
                 <>
                     <li>
                         <NavLink to="/add_job" onClick={() => setIsOpen(false)} className={linkClass}>
@@ -81,7 +94,7 @@ const Navbar = () => {
                                 onClick={toggleUserType}
                                 className="px-3 py-1 text-sm  text-white rounded bg-blue-500 hover:bg-blue-600"
                             >
-                                Switch to {userType === "buyer" ? "Seller" : "Buyer"}
+                                Switch to {userType === "Recruiter" ? "Freelancer" : "Recruiter"}
                             </button>
 
                             {/* Dropdown */}
@@ -153,7 +166,7 @@ const Navbar = () => {
                                 onClick={toggleUserType}
                                 className="block w-full text-left hover:py-2 hover:text-white  text-gray-800 rounded hover:bg-blue-600"
                             >
-                                Switch to {userType === "buyer" ? "Seller" : "Buyer"}
+                                Switch to {userType === "Recruiter" ? "Freelancer" : "Recruiter"}
                             </button>
                             <div className="flex items-center gap-3 mt-2">
                                 <img

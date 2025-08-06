@@ -14,6 +14,8 @@ import ApplyJob from "../Pages/ApplyJob/ApplyJob";
 import Error from "../Pages/Error/Error";
 import JobDetails from "../Components/JobDetails";
 import ApplicantProfile from "../Pages/ApplicantProfile/ApplicantProfile";
+import AdminRoute from "./AdminRoute";
+import Admin from "../Pages/Admin/Admin";
 
 const router=createBrowserRouter(
     [
@@ -77,6 +79,25 @@ const router=createBrowserRouter(
                 {
                     path:"/jobs/:id",
                     element:<JobDetails></JobDetails>
+                },
+                {
+                    path:'/admin',
+                    element:(<AdminRoute>
+                        <Admin></Admin>
+                    </AdminRoute>),
+loader: async () => {
+    try {
+        const res = await fetch('https://job-portal-server-ruby-two.vercel.app/user');
+        if (!res.ok) {
+            throw new Error('Failed to fetch admin data');
+        }
+        return res.json();
+    } catch (error) {
+        console.error(error);
+        return []; // return empty list instead of breaking the page
+    }
+}
+
                 }
 
             ]
