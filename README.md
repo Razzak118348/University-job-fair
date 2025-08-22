@@ -4,7 +4,7 @@ This is a **MERN Stack Job Portal Application** where users can browse jobs, app
 It includes authentication, job posting, job application tracking, and viewing applied job details.
 
 ---
-
+## Live link : https://solojobportal.web.app/
 ## ✨ Features
 
 - 🔐 **Authentication System** – Secure login & signup using Firebase/Auth system.
